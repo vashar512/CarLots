@@ -32,7 +32,7 @@
             if ($page_type == 'viewCar') {
                 if (isset($_GET['carId'])) {
                     $db_connection = DBConnection::getConnection();
-                    $get_car = $db_connection->prepare('SELECT `CreatedBy`, `CreatedOn`, `Price`, `VehicleCondition`, `VIN` FROM `Inventory` WHERE `VIN`=:vin_number');
+                    $get_car = $db_connection->prepare('SELECT `CreatedBy`, `CreatedOn`, `Price`, `VehicleCondition`, `VIN`, `ImageName` FROM `Inventory` WHERE `VIN`=:vin_number');
                     $get_car->bindParam(':vin_number', $_GET['carId']);
                     $get_car->execute();
 
@@ -44,7 +44,7 @@
 
                     $file_contents_array = explode(PHP_EOL, $server_credential_contents);
 
-                    $api_key = $file_content_array[3];
+                    $api_key = $file_contents_array[3];
                     $this->key = $api_key;
 
                     if ($car != null && $car != '') {

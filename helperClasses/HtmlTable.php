@@ -38,7 +38,7 @@
 								$this->table .= '<img src="' . $value . '" style="width: 50px; height: 50px;"></img>';
 							}
 							else {
-								$this->table .= '<img src="images/no-image.jpeg" style="width: 50px; height: 50px;"></img>';
+								$this->table .= '<img src="images/no-image.gif" style="width: 50px; height: 50px;"></img>';
 							}
 						} else {
 							if ($key == 'creator') {

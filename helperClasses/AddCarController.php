@@ -33,8 +33,15 @@
             $condition = $_POST['car_condition'];
             $creator = $_SESSION['logged_in_user']['email'];
 
+            $upload_status = UploadFileController::uploadImage($_FILES['vehicle_image']['tmp_name'], 'images/' . $_FILES['vehicle_image']['name']);
+
             $db_connection = DBConnection::getConnection();
-            $insert_car = 'INSERT INTO `Inventory` (`CreatedOn`, `CreatedBy`, `Price`, `VehicleCondition`, `VIN`) VALUES (NOW(), :createdBy, :vehiclePrice, :condition, :car_vin_number);';
+            if ($upload_status == 1) {
+                $insert_car = 'INSERT INTO `Inventory` (`CreatedOn`, `CreatedBy`, `Price`, `VehicleCondition`, `VIN`, `ImageName`) VALUES (NOW(), :createdBy, :vehiclePrice, :condition, :car_vin_number, :imageName)';
+                $image_name = $_FILES['vehicle_image']['name'];
+            } else {
+                $insert_car = 'INSERT INTO `Inventory` (`CreatedOn`, `CreatedBy`, `Price`, `VehicleCondition`, `VIN`) VALUES (NOW(), :createdBy, :vehiclePrice, :condition, :car_vin_number);';
+            }
             $db_connection->beginTransaction();
             try {
                 $sql = $db_connection->prepare($insert_car);
@@ -42,6 +49,9 @@
                 $sql->bindParam(':vehiclePrice', $price);
                 $sql->bindParam(':condition', $condition);
                 $sql->bindParam(':createdBy', $creator);
+                if ($upload_status === 1) {
+                    $sql->bindParam(':imageName', $image_name);
+                }
                 $sql->execute();
 
                 $db_connection->commit();

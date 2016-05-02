@@ -14,13 +14,15 @@
 
         private $created_on = '';
         private $creator = '';
+        private $image = '';
 
-        public function __construct($vin_number, $price, $condition, $created_on, $creator) {
+        public function __construct($vin_number, $price, $condition, $created_on, $creator, $image) {
             $this->setVinNumber($vin_number);
             $this->setPrice($price);
             $this->setCondition($condition);
             $this->setCreatedOn($created_on);
             $this->setCreatedBy($creator);
+            $this->setImage($image);
         }
 
         /**
@@ -30,9 +32,6 @@
         {
             $this->vin_number = $vin_number;
         }
-
-
-
 
 
 
@@ -84,10 +83,18 @@
             return $this->creator;
         }
 
+        private function setImage($image) {
+            $this->image = $image;
+        }
+
+        public function getImage() {
+            return $this->image;
+        }
+
         public function toArray() {
             $array = array('created_on'=>$this->getCreatedOn(), 'creator'=>$this->getCreatedBy(), 'price'
             =>$this->getPrice(), 'condition'=>$this->getCondition(),
-                'vin'=>$this->getVinNumber());
+                'vin'=>$this->getVinNumber(), 'image'=>$this->image);
 
             return $array;
         }

@@ -25,10 +25,17 @@
                 $condition = $car["VehicleCondition"];
                 $created_on = $car["CreatedOn"];
                 $creator = $car["CreatedBy"];
+                $image_name = $car["ImageName"];
+
+                if ($image_name == null) {
+                    $image_name = '';
+                } else {
+                    $image_name = 'images/' . $image_name;
+                }
 
                 echo $vin;
 
-                $car = new CarModel($vin, $price, $condition, $created_on, $creator);
+                $car = new CarModel($vin, $price, $condition, $created_on, $creator, $image_name);
                 $this->cars[$vin] = $car->toArray();
             }
 
