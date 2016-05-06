@@ -10,12 +10,7 @@
 
         public function __construct() {
 
-            $first_name = new HtmlInput("text", "first", "", "first_name", "First Name", "", "true");
-            $last_name = new HtmlInput("text", "last", "", "last_name", "Last Name", "", "true");
-            $email = new HtmlInput("text", "email_address", "", "email_address", "Email", "checkEmail(this)", "true");
-            $password = new HtmlInput("password", "password", "", "password", "Password", "", "true");
-            $password_verify = new HtmlInput("password", "password_verify_field", "", "password_verify_field",
-                "Password Verify", "checkPassword(this)", "true");
+            $window_on_load = 'window.onload = hideElement;';
 
             $email_check =
                 'function checkEmail(input) {
@@ -32,6 +27,12 @@
                  }
                 ';
 
+            $hide =
+                'function hideElement() {
+                    document.getElementById(\'username_verify\').style.display = "none";
+                 }
+                ';
+
             $password_check_match =
                 'function checkPassword(input) {
                     if (input.value === \'\' || input.value != document.getElementById(\'password\').value) {
@@ -45,12 +46,26 @@
                 }';
             $javascript_html = new HtmlJavascript($password_check_match);
             echo $javascript_html->getHtml();
+            $javascript_html = new HtmlJavascript($hide);
+            echo $javascript_html->getHtml();
+            $javascript_html = new HtmlJavascript($window_on_load);
+            echo $javascript_html->getHtml();
             $javascript_html = new HtmlJavascript($email_check);
             echo $javascript_html->getHtml();
 
-            $submit_button = new HtmlInput("submit", "submit_button", "Submit Button", "submit_button", "");
+            $first_name = new HtmlInput("text", "first", "", "first_name", "First Name", "", "true");
+            $last_name = new HtmlInput("text", "last", "", "last_name", "Last Name", "", "true");
+            $email = new HtmlInput("text", "email_address", "", "email_address", "Email", "checkEmail(this)", "true");
+            $password = new HtmlInput("password", "password", "", "password", "Password", "", "true");
+            $password_verify = new HtmlInput("password", "password_verify_field", "", "password_verify_field",
+                "Password Verify", "checkPassword(this)", "true");
 
-            $inputs = array($first_name, $last_name, $email, $password, $password_verify, $submit_button);
+            $username_verify = new HtmlInput("text", "username_verify", '', "username_verify", "",
+                "", "false", "novalidate");
+
+            $submit_button = new HtmlInput("submit", "submit_button", "Submit Button", "submit_button");
+
+            $inputs = array($first_name, $last_name, $email, $password, $password_verify, $submit_button, $username_verify);
 
             $form = new HtmlForm("./index.php?pageType=signUp", $inputs, "POST");
             $this->html .= $form->getForm();

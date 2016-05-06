@@ -32,7 +32,7 @@
             $javascript_html = new HtmlJavascript($email_check);
             $this->html .= $javascript_html->getHtml();
 
-            $submit = new HtmlInput("submit", "submit_button", "Sign In", "submit_button", "");
+            $submit = new HtmlInput("submit", "submit_button", "Sign In", "submit_button", "", "", "");
 
             $array = array($email_address_field, $password_field, $submit);
 

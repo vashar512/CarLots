@@ -11,7 +11,7 @@
 		private function get() {
 			$html_upload_input = new HtmlInput('File', 'fileInput',
 			'', 'fileInput', 'File Input Directory');
-						
+
 			$html_upload_button = new HtmlInput('Submit',
 			'fileUploadButton', 'Upload CSV File', 'fileUploadButton', '');
 

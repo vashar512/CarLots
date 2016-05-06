@@ -26,23 +26,28 @@
         }
 
         private function post() {
-            $first_name = $_POST['first'];
-            $last_name = $_POST['last'];
-            $email = $_POST['email_address'];
-            $password = $_POST['password'];
+            if ($_POST['username_verify'] == '') {
+                $first_name = $_POST['first'];
+                $last_name = $_POST['last'];
+                $email = $_POST['email_address'];
+                $password = $_POST['password'];
 
-            $user = new User($first_name, $last_name, $email, $password);
-            $connection = DBConnection::getConnection();
-            $user->saveToDatabase($connection);
-            DBConnection::closeConnection();
+                $user = new User($first_name, $last_name, $email, $password);
+                $connection = DBConnection::getConnection();
+                $user->saveToDatabase($connection);
+                DBConnection::closeConnection();
 
-            $email_user = new MailUser($email);
-            $response = $email_user->sendEmail();
-            echo $response;
+                $email_user = new MailUser($email);
+                $response = $email_user->sendEmail();
+                echo $response;
 
-            $go_to_home_link = new HtmlLink("Home", "./index.php?pageType=home", "");
-            $link = $go_to_home_link->getLink();
-            echo $link;
+                $go_to_home_link = new HtmlLink("Home", "./index.php?pageType=home", "");
+                $link = $go_to_home_link->getLink();
+                echo $link;
+            } else {
+                $page = new Page("You are a robot. Please leave NOW!!!!!!!!");
+                echo $page->getHtml();
+            }
         }
 
     }

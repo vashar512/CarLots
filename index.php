@@ -85,6 +85,14 @@
                 $user_profile_controller = new UserProfileController($request_method);
             }
         }
+
+        if ($_GET['pageType'] == 'logAttempts') {
+            if ($user_login_status != '') {
+                $logs_controller = new LogController($request_method);
+            } else {
+                $home_controller = new HomeController('GET');
+            }
+        }
     }
     else {
         $home_controller = new HomeController('GET');

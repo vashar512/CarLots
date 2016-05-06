@@ -2,9 +2,7 @@
 
 	class HtmlTable extends Table {
 
-		public function __construct($cars = null) {
-			print_r($cars);
-
+		public function createCarsTable($cars = null) {
 			if (!is_null($cars) && count($cars) > 0) {
 				$this->table .= '<table style="border:1px solid black; border-collapse:collapse;">';
 
@@ -60,11 +58,6 @@
 					$this->table .= $viewCar->getLink();
 					$this->table .= '</td>';
 
-//					$editCar = new HtmlLink('editCar', 'index.php?pageType=editCar&carId=' . $id, '');
-//					$this->table .= '<td style="border:1px solid black;">';
-//					$this->table .= $editCar->getLink();
-//					$this->table .= '</td>';
-
 					$this->table .= '</tr>';
 				}
 
@@ -73,6 +66,41 @@
 			else {
 				$this->table .= '<table style="border:1px solid black; border-collapse:collapse;">';
 				$this->table .= '</table>';
+			}
+		}
+
+		public function createLogsTable($logs = null) {
+			if (!is_null($logs) && count($logs) > 0) {
+				$this->table .= '<table style="border:1px solid black; border-collapse:collapse;">';
+
+				foreach ($logs as $id => $log) {
+					$properties = array_keys($log);
+					break;
+				}
+
+				$this->table .= '<tr style="border:1px solid black; background: grey;">';
+
+				foreach ($properties as $property) {
+					$this->table .= '<th style="border:1px solid black;">';
+					$this->table .= $property;
+					$this->table .= '</th>';
+				}
+
+				$this->table .= '</tr>';
+
+				foreach ($logs as $id => $log) {
+					$this->table .= '<tr style="border:1px solid black;">';
+
+					foreach ($log as $key => $value) {
+						$this->table .= '<td style="border:1px solid black;">';
+						$this->table .= $value;
+						$this->table .= '</td>';
+					}
+
+					$this->table .= '</tr>';
+				}
+
+				$this->table .= '</td>';
 			}
 		}
 

@@ -12,7 +12,7 @@
 		private $htmlLabel = '';
 		private $htmlInputTag = '';
 
-		public function __construct($type = '', $name = '', $value = '', $id = '', $label_text = '', $on_input = '', $required = '') {
+		public function __construct($type = '', $name = '', $value = '', $id = '', $label_text = '', $on_input = '', $required = '', $no_validate = '') {
 			$this->type = $type;
 			$this->name = $name;
 			$this->value = $value;	
@@ -21,16 +21,17 @@
 			$this->on_input = $on_input;
 			$this->required = $required;
 			$this->createLabel();	
-			$this->createHtml();	
+			$this->createHtml($no_validate);
 		}
 
 		private function createLabel() {
 			$this->htmlLabel .= '<label for="' . $this->id . '"> ' . $this->label_text . ' </label>';
 		}
 
-		private function createHtml() {
+		private function createHtml($no_validate) {
 			$this->htmlInputTag .= '<input value="' . $this->value . '" type="' . $this->type . '" id="' . $this->id .
-				'" name="' . $this->name . '" oninput="' . $this->on_input . '" required= "' . $this->required . '">
+				'" name="' . $this->name . '" oninput="' . $this->on_input . '" required= "' . $this->required . '" '
+				. $no_validate . '>
 				</input>';
 		}
 

@@ -41,7 +41,8 @@
 
             DBConnection::closeConnection();
 
-            $inventory_table = new HtmlTable($this->cars);
+            $inventory_table = new HtmlTable();
+            $inventory_table->createCarsTable($this->cars);
 
             $session_status = session_status();
 

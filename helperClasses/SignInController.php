@@ -40,6 +40,7 @@
 
             if (count($user_account) < 1) {
                 $return_link = new HtmlLink("Sign In", "index.php?pageType=signIn", "");
+                $logger = new Logger($username, "Failed");
                 echo "No account found for the email provided. Please check your email address and try again.";
                 echo "<br/>";
                 echo $return_link->getLink();
@@ -47,6 +48,7 @@
             } else {
                 $validated = $user_account[0]['validated'];
                 if ($validated == 0) {
+                    $logger = new Logger($username, "Failed");
                     $return_link = new HtmlLink("Sign In", "index.php?pageType=signIn", "");
                     echo "The email has not been validated. Please validate using the link sent from the email to sign in.";
                     echo "<br/>";
@@ -56,13 +58,14 @@
                     $user_password_hash = $user_account[0]['pass'];
                     $password_hash_class = new PasswordHash(8, false);
                     if (!$password_hash_class->CheckPassword($pass, $user_password_hash)) {
+                        $logger = new Logger($username, "Failed");
                         $return_link = new HtmlLink("Sign In", "index.php?pageType=signIn", "");
                         echo "The password is incorrect. Please validate using the link sent from the email to sign in.";
                         echo "<br/>";
                         echo $return_link->getLink();
                         return;
                     } else {
-                        session_start();
+                        // session_start();
 
                         $user = new User();
                         $user->setFirst($user_account[0]['first']);
@@ -74,6 +77,9 @@
                         $logout_link = new HtmlLink("Logout", "index.php?pageType=logout", "");
                         $home_link = new HtmlLink("Home", "index.php", "");
                         $add_car_link = new HtmlLink("Add Car", "index.php?pageType=addCar", "");
+                        $log_attempts_link = new HtmlLink("Logs", "index.php?pageType=logAttempts", "");
+                        $logger = new Logger($username, "Successful");
+
                         echo $logout_link->getLink();
                             echo '<br>';
                             echo '</br>';
@@ -81,7 +87,9 @@
                             echo '<br>';
                             echo '</br>';
                         echo $add_car_link->getLink();
-
+                            echo '<br>';
+                            echo '</br>';
+                        echo $log_attempts_link->getLink();
                     }
                 }
             }

@@ -20,6 +20,12 @@
             $this->html .= '<br/>';
             $this->html .= $view_cars_link->getLink();
 
+            if (isset($_SESSION['logged_in_user'])) {
+                $log_attempts_link = new HtmlLink("Logs", "index.php?pageType=logAttempts", "");
+
+                $this->html .= '<br/>';
+                $this->html .= $log_attempts_link->getLink();
+            }
         }
 
     }
